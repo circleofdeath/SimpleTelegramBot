@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.deltaalpha'
+version = '1.0-SNAPSHOT'
+
+sourceSets {
+    main {
+        java.srcDirs = ['./src']
+        resources.srcDirs = []
+    }
+
+    test {
+        java.srcDirs = ['./tests']
+        resources.srcDirs = []
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
