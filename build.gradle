@@ -24,6 +24,8 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation "org.telegram:telegrambots:6.7.0"
 }
 
 test {
