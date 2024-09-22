@@ -93,7 +93,7 @@ public class Calculations {
 
         if(initialPayCounter(totalCost, table.initialPayment()[lowDiffPrev]) != initialPayment) {
             builder
-                    .append("Initial payment ")
+                    .append("\nInitial payment ")
                     .append(initialPayment)
                     .append(" is not available. Closest available ")
                     .append(initialPayCounter(totalCost, table.initialPayment()[lowDiffPrev]));

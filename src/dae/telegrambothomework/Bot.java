@@ -40,12 +40,22 @@ public class Bot extends TelegramLongPollingBot {
                             Double.parseDouble(args[3])
                     ));
                 } catch(NumberFormatException ignored) {
-                    message.setText("Insert numbers");
+                    message.setText("Sorry, you need to provide numbers");
                 } catch(ArrayIndexOutOfBoundsException ignored) {
-                    message.setText("Say more");
+                    message.setText("Sorry, you provide too small amount of data");
+                } catch(Throwable ignored) {
+                    message.setText("Sorry, hapened unknown error");
                 }
             } else {
-                message.setText("What?");
+                StringBuilder builder = new StringBuilder().append(
+                        "Hello, how can i help you?\nCommands: \ncredit <mark> <total cost> <initial payment> <mothly payment>\n\nAvaliable marks: "
+                );
+
+                for(String mark : Calculations.data.keySet()) {
+                    builder.append('\n').append(mark);
+                }
+
+                message.setText(builder.toString());
             }
 
             try {
