@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+// RUN WITH JAVA 16+
 @SuppressWarnings("ALL") // send message is deprecated
 public class Bot extends TelegramLongPollingBot {
     public static MsgInput msgInput = MsgInput.DEFAULT;

@@ -8,7 +8,7 @@ version = '1.0-SNAPSHOT'
 sourceSets {
     main {
         java.srcDirs = ['./src']
-        resources.srcDirs = []
+        resources.srcDirs = ['./resources']
     }
 
     test {
@@ -22,12 +22,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-
     implementation "org.telegram:telegrambots:6.7.0"
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'com.google.code.gson:gson:2.8.9'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
