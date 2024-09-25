@@ -3,7 +3,7 @@ package dae.telegrambothomework;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Calculations {
+public class Credits {
     public static Map<String, CreditTable> data = new HashMap<>();
 
     static {
@@ -93,7 +93,7 @@ public class Calculations {
 
         if(initialPayCounter(totalCost, table.initialPayment()[lowDiffPrev]) != initialPayment) {
             builder
-                    .append("Initial payment ")
+                    .append("\nInitial payment ")
                     .append(initialPayment)
                     .append(" is not available. Closest available ")
                     .append(initialPayCounter(totalCost, table.initialPayment()[lowDiffPrev]));
