@@ -3,7 +3,7 @@ package dae.telegrambothomework;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Calculations {
+public class Credits {
     public static Map<String, CreditTable> data = new HashMap<>();
 
     static {

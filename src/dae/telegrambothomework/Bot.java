@@ -9,8 +9,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @SuppressWarnings("ALL") // send message is deprecated
 public class Bot extends TelegramLongPollingBot {
-    public static final String BOT_TOKEN = "[{ insert token }]";
-    public static final String BOT_NAME = "[{ insert name }]";
+    public static MsgInput msgInput = MsgInput.DEFAULT;
 
     public static void main(String[] args) {
         try {
@@ -29,34 +28,7 @@ public class Bot extends TelegramLongPollingBot {
 
             SendMessage message = new SendMessage();
             message.setChatId(chatId);
-
-            if(messageText.startsWith("credit ")) {
-                String[] args = messageText.substring(7).split(" ");
-
-                try {
-                    message.setText(Calculations.calculate(args[0],
-                            Double.parseDouble(args[1]),
-                            Double.parseDouble(args[2]),
-                            Double.parseDouble(args[3])
-                    ));
-                } catch(NumberFormatException ignored) {
-                    message.setText("Sorry, you need to provide numbers");
-                } catch(ArrayIndexOutOfBoundsException ignored) {
-                    message.setText("Sorry, you provide too small amount of data");
-                } catch(Throwable ignored) {
-                    message.setText("Sorry, hapened unknown error");
-                }
-            } else {
-                StringBuilder builder = new StringBuilder().append(
-                        "Hello, how can i help you?\nCommands: \ncredit <mark> <total cost> <initial payment> <mothly payment>\n\nAvaliable marks: "
-                );
-
-                for(String mark : Calculations.data.keySet()) {
-                    builder.append('\n').append(mark);
-                }
-
-                message.setText(builder.toString());
-            }
+            msgInput.process(messageText, message);
 
             try {
                 execute(message);
@@ -68,11 +40,11 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return BOT_NAME;
+        return "abcpofdjdspofjd";
     }
 
     @Override
     public String getBotToken() {
-        return BOT_TOKEN;
+        return "7892407730:AAEMrCebaasElEFuSHQ5aTinaB65sBFcO8c";
     }
 }
