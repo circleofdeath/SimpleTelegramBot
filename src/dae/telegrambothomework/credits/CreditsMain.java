@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,16 +27,17 @@ public class CreditsMain {
         if(resourceDir == null) {
             throw new IllegalStateException("Can't find resource dir");
         }
-        try(var list = java.nio.file.Files.list(java.nio.file.Path.of(resourceDir.toURI()))) {
+        try(var list = Files.list(java.nio.file.Path.of(resourceDir.toURI()))) {
             list.forEach(path -> {
-                try(var is = java.nio.file.Files.newInputStream(path)) {
-                    var content = new String(is.readAllBytes());
-                    var json = gson.fromJson(content, CreditParser.class);
-                    json.setFileContent(content);
-                    data.put(json.getRegister(), json);
-                } catch (IOException e) {
-                    throw new IllegalStateException("Can't read file", e);
+                String content;
+                try {
+                    content = new String(Files.readAllBytes(path));
+                } catch(IOException e) {
+                    throw new RuntimeException(e);
                 }
+                var json = gson.fromJson(content, CreditParser.class);
+                json.setFileContent(content);
+                data.put(json.getRegister(), json);
             });
         } catch (IOException | URISyntaxException e) {
             throw new IllegalStateException("Can't list files", e);

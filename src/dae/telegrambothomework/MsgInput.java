@@ -26,12 +26,17 @@ public abstract class MsgInput {
                     message.setText("Let's begin, please enter prize ($)");
                     Bot.msgInput = Launchpad.LAUNCHPAD;
                 }
+                case "Game" -> {
+                    message.setText("Let's begin! Enter number from 0 to 100");
+                    Bot.msgInput = Game.GAME;
+                }
                 default -> message.setText("""
                         Hello, how can i help you?
                         Available commands:
                         Credit - calculate credits for mark of car
                         CreditMarks - lists of available marks
                         Launchpool - do launchpool thing
+                        Game - do gaming
                         """);
             }
         }
