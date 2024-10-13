@@ -60,7 +60,7 @@ public class CreditsMain {
     }
 
     public static final MsgInput CAR_CREDIT = new MsgInput() {
-        public CreditInput cred_input;
+        public final CreditInput cred_input = new CreditInput();
         public int step = 0;
 
         @Override

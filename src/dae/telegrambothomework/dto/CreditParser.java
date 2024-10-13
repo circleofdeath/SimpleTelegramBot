@@ -12,7 +12,7 @@ public class CreditParser extends Registerer {
     private String parser;
 
     public void selfExecute(CreditInput input) {
-        input.setFileContent(getFileContent());
+        input.setParser(this);
         get().calculate(input);
     }
 

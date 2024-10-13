@@ -58,7 +58,7 @@ public class Launchpad {
 
                 case 3: {
                     Bot.parse(input).peek((n) -> {
-                        message.setText("Great! Next, write APR (%)");
+                        message.setText("Great! Next, write days to calculate");
                         percent = n;
                         step++;
                     }).orElseRun((ignored) -> {
@@ -77,6 +77,12 @@ public class Launchpad {
                     });
                     break;
                 }
+
+                default:
+                    message.setText("ERROR");
+                    Bot.msgInput = MsgInput.DEFAULT;
+                    step = 0;
+                    break;
             }
         }
     };

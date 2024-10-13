@@ -1,8 +1,11 @@
 package dae.telegrambothomework;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import dae.telegrambothomework.credits.CreditsMain;
+import dae.telegrambothomework.dto.BotData;
 import io.vavr.control.Either;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -13,19 +16,22 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 // RUN WITH JAVA 16+
 @SuppressWarnings("ALL") // send message is deprecated
 public class Bot extends TelegramLongPollingBot {
-    public static final ObjectMapper objectMapper = new ObjectMapper();
+    public static final ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     public static final ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
     public static final ObjectReader objectReader = objectMapper.reader();
     public static MsgInput msgInput = MsgInput.DEFAULT;
+    private BotData data;
 
-    private String name;
-    private String token;
+    public Bot(BotData data) {
+        this.data = data;
+    }
 
     public static Either<Exception, BigDecimal> parse(String string) {
         if(string == null) return Either.left(new NullPointerException());
@@ -39,7 +45,8 @@ public class Bot extends TelegramLongPollingBot {
     public static void main(String[] args) {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            botsApi.registerBot(objectReader.readValue(Files.readString(Path.of("bot.json")), Bot.class));
+            URI uri = CreditsMain.class.getClassLoader().getResource("bot.json").toURI();
+            botsApi.registerBot(new Bot(objectReader.readValue(Files.readString(Path.of(uri)), BotData.class)));
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -65,11 +72,11 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return name;
+        return data.getName();
     }
 
     @Override
     public String getBotToken() {
-        return token;
+        return data.getToken();
     }
 }
