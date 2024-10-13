@@ -1,6 +1,7 @@
 package dae.telegrambothomework.credits.factory;
 
 import dae.telegrambothomework.dto.CreditInput;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,6 +13,7 @@ public class DefaultCalculationResult implements ICalculationResult {
 
     @Data
     @Accessors(fluent = true)
+    // TODO use this thing
     public static class CreditTable {
         private double[][] percentTable;
         private double[] initialPayment;
