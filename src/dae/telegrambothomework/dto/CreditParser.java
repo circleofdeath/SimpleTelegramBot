@@ -1,18 +1,19 @@
-package dae.telegrambothomework.credits;
+package dae.telegrambothomework.dto;
 
 import dae.telegrambothomework.credits.factory.ICalculationResult;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("unchecked")
-public class CreditParser {
-    private String register;
+public class CreditParser extends Registerer {
     private String parser;
-    private String fileContent;
 
-    public String selfExecute(double totalCost, double initialPayment, double monthlyPayment) {
-        return get().calculate(fileContent, totalCost, initialPayment, monthlyPayment);
+    public void selfExecute(CreditInput input) {
+        input.setFileContent(getFileContent());
+        get().calculate(input);
     }
 
     public<T extends ICalculationResult> T get() {

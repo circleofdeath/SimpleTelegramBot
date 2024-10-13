@@ -1,7 +1,6 @@
 {
   "register": "Mazda",
   "parser": "dae.telegrambothomework.credits.factory.DefaultCalculationResult",
-  "name": "Mazda",
   "percentTable": [
     [6.5, 21.9],
     [4.9, 21.9],

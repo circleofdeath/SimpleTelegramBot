@@ -1,7 +1,6 @@
 {
   "register": "Mazda 2 seats",
   "parser": "dae.telegrambothomework.credits.factory.Car2SeatsCalculationResult",
-  "name": "Mazda",
   "percentTable": [
     [6.5, 21.9],
     [4.9, 21.9],

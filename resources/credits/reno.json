@@ -1,7 +1,6 @@
 {
   "register": "Reno",
   "parser": "dae.telegrambothomework.credits.factory.DefaultCalculationResult",
-  "name": "Reno",
   "percentTable": [
     [999, 999, 999, 999, 999],
     [999, 999, 999, 999, 999],
