@@ -1,5 +1,7 @@
 package dae.telegrambothomework.credits.factory;
 
+import dae.telegrambothomework.dto.CreditInput;
+
 public interface ICalculationResult {
-    String calculate(String fileContent, double totalCost, double initialPayment, double monthlyPayment);
+    void calculate(CreditInput input);
 }
