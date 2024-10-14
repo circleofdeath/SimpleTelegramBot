@@ -10,10 +10,6 @@ import dae.telegrambothomework.dto.Registerer;
 import io.vavr.control.Either;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,13 +19,13 @@ public class CreditsMain {
     public static final Map<String, Bank> bankData;
 
     static {
-        data = readMap(CreditParser.class, "credits").getOrElseThrow(e -> new RuntimeException(e));
-        bankData = readMap(Bank.class, "banks").getOrElseThrow(e -> new RuntimeException(e));
+        // said to not save in .json files than I save in .png files
+        data = readMap(CreditParser.class, Bot.global.getCredits()).getOrElseThrow(e -> new RuntimeException(e));
+        bankData = readMap(Bank.class, Bot.global.getBanks()).getOrElseThrow(e -> new RuntimeException(e));
     }
 
-    public static<T extends Registerer> Either<Exception, T> read(Class<T> type, Path path) {
+    public static<T extends Registerer> Either<Exception, T> read(Class<T> type, String content) {
         try {
-            var content = new String(Files.readAllBytes(path));
             var json = Bot.objectReader.readValue(content, type);
             json.setFileContent(content);
             return Either.right(json);
@@ -38,22 +34,16 @@ public class CreditsMain {
         }
     }
 
-    public static<T extends Registerer> Either<Exception, Map<String, T>> readMap(Class<T> type, String directory) {
-        if(type == null || directory == null) return Either.left(new NullPointerException());
-        var resourceDir = CreditsMain.class.getClassLoader().getResource(directory);
-        if(resourceDir == null) return Either.left(new IllegalStateException());
+    public static<T extends Registerer> Either<Exception, Map<String, T>> readMap(Class<T> type, String[] packages) {
+        if(type == null || packages == null) return Either.left(new NullPointerException());
         Map<String, T> output = new HashMap<>();
 
-        try(var list = Files.list(Path.of(resourceDir.toURI()))) {
-            list.forEach(path -> {
-                read(type, path).peek(json -> {
-                    output.put(json.getRegister(), json);
-                }).orElseRun(error -> {
-                    System.out.println("[WARNING] error loading .json, skipped: " + error.getMessage());
-                });
+        for(String string : packages) {
+            read(type, string).peek(json -> {
+                output.put(json.getRegister(), json);
+            }).orElseRun(error -> {
+                System.out.println("[WARNING] error loading .json, skipped: " + error.getMessage());
             });
-        } catch (IOException | URISyntaxException e) {
-            return Either.left(e);
         }
 
         return Either.right(output);
